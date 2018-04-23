@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Recommender</string>
+
+    <!-- Tabs -->
+    <string name="home">Home</string>
+    <string name="categories">Genres</string>
+    <string name="search">Search</string>
+    <string name="trending">Trending</string>
+
+    <!-- Error Dialog -->
+    <string name="ok">OK</string>
+    <string name="error">Some error occurred</string>
+    <string name="please_connect_internet">Please connect to the internet</string>
+
+    <!-- RegisterUserFragment -->
+    <string name="account_created_successfully">Account created successfully</string>
+</resources>

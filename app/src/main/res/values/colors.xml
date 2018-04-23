@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0d9ca9</color>
+    <color name="colorPrimaryDark">#086871</color>
+    <color name="colorAccent">@color/colorPrimary</color>
+
+    <color name="tab_selected">@color/colorPrimaryDark</color>
+    <color name="tab_unselected">@color/colorPrimaryDark</color>
+</resources>
