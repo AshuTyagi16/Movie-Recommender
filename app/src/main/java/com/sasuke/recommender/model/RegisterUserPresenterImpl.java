@@ -23,9 +23,9 @@ public class RegisterUserPresenterImpl implements RegisterUserPresenter {
     }
 
     @Override
-    public void register(String username, String password, String phoneNumber, int age) {
+    public void register(String email, String password, String name, int age) {
         if (NetworkManager.getInstance(Recommender.getAppContext()).isConnected()) {
-            RecommenderApi.getInstance().register(username, password, phoneNumber, age).enqueue(new Callback<Boolean>() {
+            RecommenderApi.getInstance().register(email, password, name, age).enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.body().equals(true))

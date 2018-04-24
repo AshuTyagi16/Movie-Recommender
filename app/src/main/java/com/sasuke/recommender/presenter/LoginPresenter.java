@@ -5,5 +5,5 @@ package com.sasuke.recommender.presenter;
  */
 
 public interface LoginPresenter {
-    void login(String username, String password);
+    void login(String email, String password);
 }

@@ -14,4 +14,8 @@
 
     <!-- RegisterUserFragment -->
     <string name="account_created_successfully">Account created successfully</string>
+
+    <!-- Login Prompt Activity -->
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
 </resources>

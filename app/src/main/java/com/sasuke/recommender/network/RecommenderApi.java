@@ -23,7 +23,7 @@ public class RecommenderApi {
     public final static int CONNECTION_TIMEOUT = 30;
     private final static int READ_TIMEOUT = 30;
     private final static int WRITE_TIMEOUT = 30;
-    public static final String BASE_API_URL = "http://rentkart.000webhostapp.com/";
+    public static final String BASE_API_URL = "https://recommenderdb.000webhostapp.com";
 
     private static volatile RecommenderApi instance;
 
@@ -48,11 +48,6 @@ public class RecommenderApi {
         Gson gson = new GsonBuilder().create();
         OkHttpClient httpClient = createHttpClient();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(httpClient)
-                .baseUrl(BASE_API_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder
@@ -60,16 +55,22 @@ public class RecommenderApi {
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(httpClient)
+                .client(httpClientBuilder.build())
+                .baseUrl(BASE_API_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
         service = retrofit.create(RecommenderApiInterface.class);
     }
 
-    public Call<User> login(String username, String password) {
-        return service.login(username, password);
+    public Call<User> login(String email, String password) {
+        return service.login(email, password);
     }
 
-    public Call<Boolean> register(String username, String password,
-                                  String phoneNumber, int age) {
-        return service.register(username, password, phoneNumber, age);
+    public Call<Boolean> register(String email, String password,
+                                  String name, int age) {
+        return service.register(email, password, name, age);
     }
 
     public Call<ArrayList<Movie>> getAllMovies() {

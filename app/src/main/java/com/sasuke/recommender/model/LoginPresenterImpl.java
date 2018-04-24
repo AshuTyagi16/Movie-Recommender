@@ -23,9 +23,9 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void login(String username, String password) {
+    public void login(String email, String password) {
         if (NetworkManager.getInstance(Recommender.getAppContext()).isConnected()) {
-            RecommenderApi.getInstance().login(username, password).enqueue(new Callback<User>() {
+            RecommenderApi.getInstance().login(email, password).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     mLoginView.onLoginSuccess(response.body());

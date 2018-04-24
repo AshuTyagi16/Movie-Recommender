@@ -34,7 +34,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mLoginPresenter = new LoginPresenterImpl(this);
-        mLoginPresenter.login("", "");
+//        mLoginPresenter.login("", "");
     }
 
     @Override

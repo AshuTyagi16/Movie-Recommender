@@ -5,5 +5,5 @@ package com.sasuke.recommender.presenter;
  */
 
 public interface RegisterUserPresenter {
-    void register(String username, String password, String phoneNumber, int age);
+    void register(String email, String password, String name, int age);
 }

@@ -34,7 +34,7 @@ public class RegisterUserFragment extends BaseFragment implements RegisterUserVi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRegisterUserPresenter = new RegisterUserPresenterImpl(this);
-        mRegisterUserPresenter.register("", "", "", 0);
+//        mRegisterUserPresenter.register("", "", "", 0);
     }
 
     @Override

@@ -17,8 +17,6 @@ import com.sasuke.recommender.adapter.TabAdapter;
 import com.sasuke.recommender.fragment.AllMoviesFragment;
 import com.sasuke.recommender.fragment.CategoriesFragment;
 
-import java.util.List;
-
 import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity {
