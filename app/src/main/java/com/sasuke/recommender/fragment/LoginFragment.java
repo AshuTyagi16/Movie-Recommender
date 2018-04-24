@@ -17,6 +17,7 @@ import com.sasuke.recommender.R;
 import com.sasuke.recommender.activity.MainActivity;
 import com.sasuke.recommender.dialog.ErrorDialog;
 import com.sasuke.recommender.dialog.ProgressDialog;
+import com.sasuke.recommender.manager.PreferenceManager;
 import com.sasuke.recommender.model.LoginPresenterImpl;
 import com.sasuke.recommender.model.User;
 import com.sasuke.recommender.presenter.LoginPresenter;
@@ -95,6 +96,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
             progressDialog.dismissDialog();
             if (user.isSuccess()) {
                 Toasty.success(getContext(), getResources().getString(R.string.login_success)).show();
+                saveUser(user);
                 startActivity(MainActivity.newIntent(getContext()));
             } else
                 Toasty.error(getContext(), getResources().getString(R.string.login_error)).show();
@@ -126,5 +128,9 @@ public class LoginFragment extends BaseFragment implements LoginView {
     @Override
     public void onErrorDialogNegativeClick(MaterialDialog dialog) {
         errorDialog.dismissDialog();
+    }
+
+    private void saveUser(User user) {
+        PreferenceManager.getInstance().setUser(user);
     }
 }

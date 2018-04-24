@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.fragment.LoginFragment;
 import com.sasuke.recommender.fragment.RegisterUserFragment;
+import com.sasuke.recommender.manager.PreferenceManager;
 
 import java.util.List;
 
@@ -47,6 +48,9 @@ public class LoginPromptActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_prompt);
         ButterKnife.bind(this);
+        if (PreferenceManager.getInstance().isUserLoggedIn()) {
+            startActivity(MainActivity.newIntent(this));
+        }
         mActionBar = getSupportActionBar();
         mFragmentManager = getSupportFragmentManager();
     }

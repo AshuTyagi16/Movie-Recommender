@@ -19,7 +19,7 @@ public interface RecommenderApiInterface {
     Call<User> login(@Query("email") String email, @Query("password") String password);
 
     @GET("/register.php")
-    Call<Boolean> register(@Query("email") String email, @Query("password") String password,
+    Call<User> register(@Query("email") String email, @Query("password") String password,
                            @Query("name") String name,  @Query("age") int age);
 
     @GET("/fetchMovies.php")

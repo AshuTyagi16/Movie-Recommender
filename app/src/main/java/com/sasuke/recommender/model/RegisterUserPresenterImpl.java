@@ -25,15 +25,14 @@ public class RegisterUserPresenterImpl implements RegisterUserPresenter {
     @Override
     public void register(String email, String password, String name, int age) {
         if (NetworkManager.getInstance(Recommender.getAppContext()).isConnected()) {
-            RecommenderApi.getInstance().register(email, password, name, age).enqueue(new Callback<Boolean>() {
+            RecommenderApi.getInstance().register(email, password, name, age).enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.body().equals(true))
-                        mRegisterUserView.onRegisterUserSuccess();
+                public void onResponse(Call<User> call, Response<User> response) {
+                    mRegisterUserView.onRegisterUserSuccess(response.body());
                 }
 
                 @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
+                public void onFailure(Call<User> call, Throwable t) {
                     mRegisterUserView.onRegisterUserFailure(t);
                 }
             });

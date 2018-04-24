@@ -68,7 +68,7 @@ public class RecommenderApi {
         return service.login(email, password);
     }
 
-    public Call<Boolean> register(String email, String password,
+    public Call<User> register(String email, String password,
                                   String name, int age) {
         return service.register(email, password, name, age);
     }

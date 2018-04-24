@@ -29,6 +29,10 @@ public class User {
     @Expose
     private boolean success;
 
+    @SerializedName("error")
+    @Expose
+    private String error;
+
     public String getName() {
         return name;
     }
@@ -67,5 +71,13 @@ public class User {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

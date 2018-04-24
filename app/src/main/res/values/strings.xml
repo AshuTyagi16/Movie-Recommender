@@ -30,4 +30,9 @@
     <string name="login_error">Email or password is not correct</string>
     <string name="demo_email">abc@gmail.com</string>
     <string name="password">Password</string>
+
+    <!-- Register User Fragment -->
+    <string name="name_placeholder">Your name here</string>
+    <string name="age_placeholder">Your age here</string>
+    <string name="confirm_password">Confirm password</string>
 </resources>
