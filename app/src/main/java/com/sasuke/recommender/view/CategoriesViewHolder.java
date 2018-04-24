@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sasuke.recommender.R;
+import com.sasuke.recommender.util.ImageStubUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -34,9 +35,9 @@ public class CategoriesViewHolder extends RecyclerView.ViewHolder {
         mTvCategoryName.setText(category);
         mTvCategoryDescription.setText(category);
         Picasso.get()
-                .load(R.drawable.ic_launcher_background)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .load(ImageStubUtils.getImage())
+                .placeholder(R.drawable.night_life)
+                .error(R.drawable.nature)
                 .into(mIvCategory);
     }
 }

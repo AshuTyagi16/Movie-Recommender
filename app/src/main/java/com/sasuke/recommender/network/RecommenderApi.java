@@ -20,9 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecommenderApi {
 
-    public final static int CONNECTION_TIMEOUT = 30;
-    private final static int READ_TIMEOUT = 30;
-    private final static int WRITE_TIMEOUT = 30;
     public static final String BASE_API_URL = "https://recommenderdb.000webhostapp.com";
 
     private static volatile RecommenderApi instance;
@@ -48,16 +45,8 @@ public class RecommenderApi {
         Gson gson = new GsonBuilder().create();
         OkHttpClient httpClient = createHttpClient();
 
-
-        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        httpClientBuilder
-                .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .client(httpClient)
-                .client(httpClientBuilder.build())
                 .baseUrl(BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
