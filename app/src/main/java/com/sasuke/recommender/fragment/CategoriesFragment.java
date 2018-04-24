@@ -10,6 +10,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.adapter.CategoriesAdapter;
+import com.sasuke.recommender.dialog.ErrorDialog;
 import com.sasuke.recommender.model.CategoriesPresenterImpl;
 import com.sasuke.recommender.presenter.CategoriesPresenter;
 import com.sasuke.recommender.view.CategoriesView;
@@ -56,14 +57,16 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
 
     @Override
     public void onGetCategoriesFailure(Throwable t) {
-        errorDialog.setTitle(t.getMessage());
-        errorDialog.setPositiveButtonText(getResources().getString(R.string.ok));
+        errorDialog = new ErrorDialog(getContext(), t.getMessage(), "",
+                true, getResources().getString(R.string.ok), "");
+        errorDialog.showDialog();
     }
 
     @Override
     public void showNetworkConnectionError() {
-        errorDialog.setTitle(getResources().getString(R.string.please_connect_internet));
-        errorDialog.setPositiveButtonText(getResources().getString(R.string.ok));
+        errorDialog = new ErrorDialog(getContext(), getResources().getString(R.string.please_connect_internet), "",
+                true, getResources().getString(R.string.ok), "");
+        errorDialog.showDialog();
     }
 
     @Override

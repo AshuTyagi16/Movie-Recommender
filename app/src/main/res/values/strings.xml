@@ -10,12 +10,24 @@
     <!-- Error Dialog -->
     <string name="ok">OK</string>
     <string name="error">Some error occurred</string>
+    <string name="no_network_available">No network available</string>
+    <string name="message_network_error">Please check your internet connection</string>
     <string name="please_connect_internet">Please connect to the internet</string>
 
-    <!-- RegisterUserFragment -->
-    <string name="account_created_successfully">Account created successfully</string>
+    <!-- Progress Dialog -->
+    <string name="please_wait">Please wait…</string>
+    <string name="loading_content_for_you">Loading the awesome stuff for you</string>
 
     <!-- Login Prompt Activity -->
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
+
+    <!-- RegisterUserFragment -->
+    <string name="account_created_successfully">Account created successfully</string>
+
+    <!-- Login Fragment -->
+    <string name="login_success">Logged in successfully</string>
+    <string name="login_error">Email or password is not correct</string>
+    <string name="demo_email">abc@gmail.com</string>
+    <string name="password">Password</string>
 </resources>

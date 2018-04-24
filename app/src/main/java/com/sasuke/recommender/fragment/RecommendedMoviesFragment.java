@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
+import com.sasuke.recommender.dialog.ErrorDialog;
 import com.sasuke.recommender.model.RecommendedMoviesPresenterImpl;
 import com.sasuke.recommender.presenter.RecommendedMoviesPresenter;
 import com.sasuke.recommender.view.RecommendedMoviesView;
@@ -62,17 +63,18 @@ public class RecommendedMoviesFragment extends BaseFragment implements Recommend
 
     @Override
     public void showNetworkConnectionError() {
-        errorDialog.setTitle(getResources().getString(R.string.please_connect_internet));
-        errorDialog.setPositiveButtonText(getResources().getString(R.string.ok));
+        errorDialog = new ErrorDialog(getContext(), getResources().getString(R.string.please_connect_internet), "",
+                true, getResources().getString(R.string.ok), "");
+        errorDialog.showDialog();
     }
 
     @Override
     public void onErrorDialogPositiveClick(MaterialDialog dialog) {
-
+        errorDialog.dismissDialog();
     }
 
     @Override
     public void onErrorDialogNegativeClick(MaterialDialog dialog) {
-
+        errorDialog.dismissDialog();
     }
 }

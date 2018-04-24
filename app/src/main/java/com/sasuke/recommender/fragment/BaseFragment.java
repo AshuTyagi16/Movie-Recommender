@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.sasuke.recommender.R;
 import com.sasuke.recommender.dialog.ErrorDialog;
+import com.sasuke.recommender.dialog.ProgressDialog;
 
 import butterknife.ButterKnife;
 
@@ -24,6 +26,7 @@ public abstract class BaseFragment extends Fragment implements ErrorDialog.OnBut
 
 
     protected ErrorDialog errorDialog;
+    protected ProgressDialog progressDialog;
 
     @LayoutRes
     abstract protected int getLayoutResId();
@@ -31,8 +34,8 @@ public abstract class BaseFragment extends Fragment implements ErrorDialog.OnBut
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        errorDialog = new ErrorDialog(getContext());
-        errorDialog.setOnButtonsClickListener(this);
+        progressDialog = new ProgressDialog(getContext(), getResources().getString(R.string.please_wait),
+                getResources().getString(R.string.loading_content_for_you), true);
     }
 
     @Nullable

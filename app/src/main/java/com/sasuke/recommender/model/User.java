@@ -25,6 +25,10 @@ public class User {
     @Expose
     private int age;
 
+    @SerializedName("success")
+    @Expose
+    private boolean success;
+
     public String getName() {
         return name;
     }
@@ -55,5 +59,13 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

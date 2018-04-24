@@ -6,4 +6,7 @@
 
     <color name="tab_selected">@color/colorPrimaryDark</color>
     <color name="tab_unselected">@color/colorPrimaryDark</color>
+
+    <color name="black">#000000</color>
+    <color name="text_light">#8a000000</color>
 </resources>

@@ -10,6 +10,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.adapter.MoviesAdapter;
+import com.sasuke.recommender.dialog.ErrorDialog;
 import com.sasuke.recommender.model.AllMoviesPresenterImpl;
 import com.sasuke.recommender.model.Movie;
 import com.sasuke.recommender.presenter.AllMoviesPresenter;
@@ -57,14 +58,18 @@ public class AllMoviesFragment extends BaseFragment implements AllMoviesView {
 
     @Override
     public void onGetAllMoviesFailure(Throwable t) {
-        errorDialog.setTitle(t.getMessage());
-        errorDialog.setPositiveButtonText(getResources().getString(R.string.ok));
+
+        errorDialog = new ErrorDialog(getContext(), t.getMessage(), "",
+                true, getResources().getString(R.string.ok), "");
+        errorDialog.showDialog();
     }
 
     @Override
     public void showNetworkConnectionError() {
-        errorDialog.setTitle(getResources().getString(R.string.please_connect_internet));
-        errorDialog.setPositiveButtonText(getResources().getString(R.string.ok));
+
+        errorDialog = new ErrorDialog(getContext(), getResources().getString(R.string.please_connect_internet), "",
+                true, getResources().getString(R.string.ok), "");
+        errorDialog.showDialog();
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -30,9 +31,10 @@ public class LoginPromptActivity extends AppCompatActivity {
     @BindView(R.id.ll_login_prompt)
     LinearLayout mLlLoginPrompt;
 
-    private FragmentManager fm;
-    private FragmentTransaction ft;
-    private List<Fragment> fragments;
+    private FragmentManager mFragmentManager;
+    private FragmentTransaction mFragmentTransaction;
+    private List<Fragment> mFragmentList;
+    private ActionBar mActionBar;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginPromptActivity.class);
@@ -45,15 +47,16 @@ public class LoginPromptActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_prompt);
         ButterKnife.bind(this);
-        fm = getSupportFragmentManager();
+        mActionBar = getSupportActionBar();
+        mFragmentManager = getSupportFragmentManager();
     }
 
     @Override
     public void onBackPressed() {
-        if ((fm.findFragmentByTag(LoginFragment.class.getName()) != null
-                && fm.findFragmentByTag(LoginFragment.class.getName()).isVisible())
-                || (fm.findFragmentByTag(RegisterUserFragment.class.getName()) != null
-                && fm.findFragmentByTag(RegisterUserFragment.class.getName()).isVisible()))
+        if ((mFragmentManager.findFragmentByTag(LoginFragment.class.getName()) != null
+                && mFragmentManager.findFragmentByTag(LoginFragment.class.getName()).isVisible())
+                || (mFragmentManager.findFragmentByTag(RegisterUserFragment.class.getName()) != null
+                && mFragmentManager.findFragmentByTag(RegisterUserFragment.class.getName()).isVisible()))
             hideAll();
         else
             super.onBackPressed();
@@ -71,43 +74,45 @@ public class LoginPromptActivity extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment, String name) {
         mLlLoginPrompt.setVisibility(View.GONE);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(name);
-        ft = fm.beginTransaction();
-        fragments = fm.getFragments();
-        if (fragments != null) {
-            for (Fragment f : fragments) {
+        if (mActionBar != null)
+            mActionBar.setTitle(name);
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentList = mFragmentManager.getFragments();
+        if (mFragmentList != null) {
+            for (Fragment f : mFragmentList) {
                 if (f != null) {
-                    ft.hide(f);
+                    mFragmentTransaction.hide(f);
                 }
             }
         }
-        Fragment f1 = fm.findFragmentByTag(fragment.getClass().getName());
+        Fragment f1 = mFragmentManager.findFragmentByTag(fragment.getClass().getName());
         if (f1 == null) {
             f1 = fragment;
-            ft.add(R.id.container, f1, fragment.getClass().getName());
+            mFragmentTransaction.add(R.id.container, f1, fragment.getClass().getName());
         } else {
-            ft.show(f1);
+            mFragmentTransaction.show(f1);
         }
         try {
-            ft.commit();
+            mFragmentTransaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void hideAll() {
-        ft = fm.beginTransaction();
-        fragments = fm.getFragments();
-        if (fragments != null) {
-            for (Fragment f : fragments) {
+        if (mActionBar != null)
+            mActionBar.setTitle(getString(R.string.app_name));
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentList = mFragmentManager.getFragments();
+        if (mFragmentList != null) {
+            for (Fragment f : mFragmentList) {
                 if (f != null) {
-                    ft.hide(f);
+                    mFragmentTransaction.hide(f);
                 }
             }
         }
         try {
-            ft.commit();
+            mFragmentTransaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }

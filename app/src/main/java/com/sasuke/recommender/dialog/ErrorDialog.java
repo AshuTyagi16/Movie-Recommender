@@ -15,52 +15,32 @@ public class ErrorDialog {
     private MaterialDialog dialog;
     private OnButtonsClickListener onButtonsClickListener;
 
-    public ErrorDialog(Context context) {
-        init(context);
+    public ErrorDialog(Context context, String title, String content, boolean cancellable, String positiveButtonText, String negativeButtonText) {
+        init(context, title, content, cancellable, positiveButtonText, negativeButtonText);
     }
 
-    private void init(Context context) {
+    private void init(Context context, String title, String content, boolean cancellable, String positiveButtonText, String negativeButtonText) {
         dialog = new MaterialDialog.Builder(context)
+                .title(title)
+                .content(content)
+                .cancelable(cancellable)
+                .positiveText(positiveButtonText)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (onButtonsClickListener != null)
+                            onButtonsClickListener.onErrorDialogPositiveClick(dialog);
+                    }
+                })
+                .negativeText(negativeButtonText)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (onButtonsClickListener != null)
+                            onButtonsClickListener.onErrorDialogNegativeClick(dialog);
+                    }
+                })
                 .build();
-        setListeners();
-    }
-
-    private void setListeners() {
-        dialog.getBuilder().onPositive(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                if (onButtonsClickListener != null)
-                    onButtonsClickListener.onErrorDialogPositiveClick(dialog);
-            }
-        });
-
-        dialog.getBuilder().onNegative(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                if (onButtonsClickListener != null)
-                    onButtonsClickListener.onErrorDialogNegativeClick(dialog);
-            }
-        });
-    }
-
-    public void setTitle(String title) {
-        dialog.setTitle(title);
-    }
-
-    public void setContent(String content) {
-        dialog.setContent(content);
-    }
-
-    public void setCancellable(boolean isCancellable) {
-        dialog.setCancelable(isCancellable);
-    }
-
-    public void setPositiveButtonText(String positiveButtonText) {
-        dialog.getBuilder().positiveText(positiveButtonText);
-    }
-
-    public void setNegativeButtonText(String negativeButtonText) {
-        dialog.getBuilder().negativeText(negativeButtonText);
     }
 
     public void setOnButtonsClickListener(OnButtonsClickListener onButtonsClickListener) {
