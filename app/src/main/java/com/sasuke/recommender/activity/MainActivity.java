@@ -16,6 +16,8 @@ import com.sasuke.recommender.R;
 import com.sasuke.recommender.adapter.TabAdapter;
 import com.sasuke.recommender.fragment.AllMoviesFragment;
 import com.sasuke.recommender.fragment.CategoriesFragment;
+import com.sasuke.recommender.fragment.FavouritesFragment;
+import com.sasuke.recommender.fragment.SearchFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPagerAdapter() {
         TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
         tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.home));
+        tabAdapter.addFragment(SearchFragment.newInstance(), getResources().getString(R.string.search));
         tabAdapter.addFragment(CategoriesFragment.newInstance(), getResources().getString(R.string.categories));
-        tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.search));
-        tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.favourite));
+        tabAdapter.addFragment(FavouritesFragment.newInstance(), getResources().getString(R.string.favourite));
         tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.favourite));
         viewPager.setAdapter(tabAdapter);
     }
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             case POSITION_SEARCH:
                 return R.drawable.ic_search_disabled;
             case POSITION_CATEGORIES:
-                return R.drawable.ic_home_disabled;
+                return R.drawable.ic_settings_disabled;
             case POSITION_FAVOURITE:
                 return R.drawable.ic_favorite_disabled;
             default:
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             case POSITION_SEARCH:
                 return R.drawable.ic_search;
             case POSITION_CATEGORIES:
-                return R.drawable.ic_home;
+                return R.drawable.ic_settings;
             case POSITION_FAVOURITE:
                 return R.drawable.ic_favouite;
             default:

@@ -56,14 +56,14 @@ public class PreferenceManager {
         return prefs.getBoolean(EXTRA_USER_LOGIN_STATUS, DEFAULT_LOGIN_STATUS);
     }
 
-    public User getUser(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+    public User getUser() {
+        SharedPreferences prefs = mContext.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
         String user = prefs.getString(EXTRA_USER, "");
         return new Gson().fromJson(user, User.class);
     }
 
-    public void clearAll(Context context) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE).edit();
+    public void clearAll() {
+        SharedPreferences.Editor editor = mContext.getSharedPreferences(MY_PREFS, MODE_PRIVATE).edit();
         editor.clear();
         editor.apply();
     }

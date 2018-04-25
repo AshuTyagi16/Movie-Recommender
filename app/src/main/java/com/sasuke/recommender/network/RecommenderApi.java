@@ -58,12 +58,12 @@ public class RecommenderApi {
     }
 
     public Call<User> register(String email, String password,
-                                  String name, int age) {
+                               String name, int age) {
         return service.register(email, password, name, age);
     }
 
-    public Call<ArrayList<Movie>> getAllMovies() {
-        return service.getAllMovies();
+    public Call<ArrayList<Movie>> getAllMovies(int userId) {
+        return service.getAllMovies(userId);
     }
 
     public Call<ArrayList<String>> getCategories() {
@@ -84,6 +84,18 @@ public class RecommenderApi {
 
     public Call<ArrayList<Movie>> getRecommendationsForQueryAndGenre(String movieName, String genre) {
         return service.getRecommendationsForQueryAndGenre(movieName, genre);
+    }
+
+    public Call<Boolean> favouriteMovie(int userId, int movieId) {
+        return service.favouriteMovie(userId, movieId);
+    }
+
+    public Call<Boolean> unfavouriteMovie(int userId, int movieId) {
+        return service.unfavouriteMovie(userId, movieId);
+    }
+
+    public Call<ArrayList<Movie>> fetchFavouriteMovies(int userId) {
+        return service.fetchFavouriteMovies(userId);
     }
 
     /********Interceptor********/

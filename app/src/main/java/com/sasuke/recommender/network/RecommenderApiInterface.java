@@ -20,10 +20,10 @@ public interface RecommenderApiInterface {
 
     @GET("/register.php")
     Call<User> register(@Query("email") String email, @Query("password") String password,
-                           @Query("name") String name,  @Query("age") int age);
+                        @Query("name") String name, @Query("age") int age);
 
     @GET("/fetchMovies.php")
-    Call<ArrayList<Movie>> getAllMovies();
+    Call<ArrayList<Movie>> getAllMovies(@Query("userId") int userId);
 
     @GET("/fetchAllGenres.php")
     Call<ArrayList<String>> getCategories();
@@ -39,4 +39,13 @@ public interface RecommenderApiInterface {
 
     @GET("/fetchRecommendationsForQueryAndGenre.php")
     Call<ArrayList<Movie>> getRecommendationsForQueryAndGenre(@Query("movieName") String movieName, @Query("genre") String genre);
+
+    @GET("/unfavouriteMovie.php")
+    Call<Boolean> unfavouriteMovie(@Query("userId") int userId, @Query("movieId") int movieId);
+
+    @GET("/favouriteMovie.php")
+    Call<Boolean> favouriteMovie(@Query("userId") int userId, @Query("movieId") int movieId);
+
+    @GET("/fetchFavouriteMovies.php")
+    Call<ArrayList<Movie>> fetchFavouriteMovies(@Query("userId") int userId);
 }

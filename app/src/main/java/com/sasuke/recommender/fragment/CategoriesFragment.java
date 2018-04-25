@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
+import com.sasuke.recommender.activity.MoviesActivity;
 import com.sasuke.recommender.adapter.CategoriesAdapter;
 import com.sasuke.recommender.model.CategoriesPresenterImpl;
 import com.sasuke.recommender.presenter.CategoriesPresenter;
@@ -24,7 +25,7 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
  * Created by abc on 4/23/2018.
  */
 
-public class CategoriesFragment extends BaseFragment implements CategoriesView {
+public class CategoriesFragment extends BaseFragment implements CategoriesView, CategoriesAdapter.OnItemClickListener {
 
     @BindView(R.id.rv_categories)
     RecyclerView mRvCategories;
@@ -50,6 +51,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         super.onViewCreated(view, savedInstanceState);
         mRvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new CategoriesAdapter();
+        mAdapter.setOnItemClickListsner(this);
         mRvCategories.setAdapter(mAdapter);
         mCategoriesPresenter = new CategoriesPresenterImpl(this);
         mCategoriesPresenter.getCategories();
@@ -85,5 +87,10 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     @Override
     public void onErrorDialogNegativeClick(MaterialDialog dialog) {
         errorDialog.dismissDialog();
+    }
+
+    @Override
+    public void onItemClick(String category) {
+        startActivity(MoviesActivity.newIntent(getContext(), category));
     }
 }

@@ -37,4 +37,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
         this.mMovieList = list;
         notifyDataSetChanged();
     }
+
+    public void updateItem(Movie movie) {
+        int pos = 0;
+        for (int i = 0; i < mMovieList.size(); i++) {
+            if (mMovieList.get(i).getMovieId() == movie.getMovieId()) {
+                pos = i;
+                break;
+            }
+        }
+        mMovieList.set(pos, movie);
+        notifyItemChanged(pos);
+    }
 }

@@ -76,4 +76,10 @@ dependencies {
     //Progress Bar
     implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.3.0'
 
+    //Search View
+    implementation 'xyz.sahildave:searchviewlayout:0.6'
+
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
 }

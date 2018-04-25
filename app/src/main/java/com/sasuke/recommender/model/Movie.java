@@ -17,12 +17,23 @@ public class Movie {
     @SerializedName("title")
     @Expose
     private String title;
+    @SerializedName("isFavourite")
+    @Expose
+    private boolean isFavourite;
     @SerializedName("thumbnail")
     @Expose
     private String thumbnail;
     @SerializedName("genres")
     @Expose
     private List<String> genres = null;
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+    }
 
     public Integer getMovieId() {
         return movieId;

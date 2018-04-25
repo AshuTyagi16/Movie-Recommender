@@ -11,17 +11,11 @@ import android.widget.ImageView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.adapter.MoviesAdapter;
-import com.sasuke.recommender.event.ItemChangedEvent;
-import com.sasuke.recommender.manager.PreferenceManager;
-import com.sasuke.recommender.model.AllMoviesPresenterImpl;
 import com.sasuke.recommender.model.Movie;
-import com.sasuke.recommender.presenter.AllMoviesPresenter;
+import com.sasuke.recommender.model.MoviesPresenterImpl;
+import com.sasuke.recommender.presenter.MoviesPresenter;
 import com.sasuke.recommender.util.ItemDecorator;
-import com.sasuke.recommender.view.AllMoviesView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.sasuke.recommender.view.MoviesView;
 
 import java.util.ArrayList;
 
@@ -29,10 +23,10 @@ import butterknife.BindView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 /**
- * Created by abc on 4/23/2018.
+ * Created by abc on 4/25/2018.
  */
 
-public class AllMoviesFragment extends BaseFragment implements AllMoviesView {
+public class MoviesFragment extends BaseFragment implements MoviesView {
 
     @BindView(R.id.rv_movies)
     RecyclerView mRvMovies;
@@ -41,19 +35,33 @@ public class AllMoviesFragment extends BaseFragment implements AllMoviesView {
     @BindView(R.id.pb_movies)
     CircularProgressBar mPbMovies;
 
-    private AllMoviesPresenter mAllMoviesPresenter;
+    private MoviesPresenter mMoviesPresenter;
     private MoviesAdapter mAdapter;
 
     private static final int SPAN_COUNT = 2;
     private static final int GRID_SIZE = 100;
+    private static final String EXTRA_CATEGORY = "category";
 
-    public static AllMoviesFragment newInstance() {
-        return new AllMoviesFragment();
+    private String mCategory;
+
+    public static MoviesFragment newInstance(String category) {
+        Bundle bundle = new Bundle();
+        bundle.putString(EXTRA_CATEGORY, category);
+        MoviesFragment fragment = new MoviesFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_movies;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null)
+            mCategory = getArguments().getString(EXTRA_CATEGORY);
     }
 
     @Override
@@ -64,24 +72,12 @@ public class AllMoviesFragment extends BaseFragment implements AllMoviesView {
                 getResources().getDimensionPixelSize(R.dimen.item_list_spacing), GRID_SIZE));
         mAdapter = new MoviesAdapter();
         mRvMovies.setAdapter(mAdapter);
-        mAllMoviesPresenter = new AllMoviesPresenterImpl(this);
-        mAllMoviesPresenter.getAllMovies(PreferenceManager.getInstance().getUser().getId());
+        mMoviesPresenter = new MoviesPresenterImpl(this);
+        mMoviesPresenter.getMoviesForCategory(mCategory);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onGetAllMoviesSuccess(ArrayList<Movie> list) {
+    public void onGetMoviesSuccess(ArrayList<Movie> list) {
         mAdapter.setMovies(list);
         mPbMovies.setVisibility(View.GONE);
         mIvPlaceholder.setVisibility(View.GONE);
@@ -89,7 +85,7 @@ public class AllMoviesFragment extends BaseFragment implements AllMoviesView {
     }
 
     @Override
-    public void onGetAllMoviesFailure(Throwable t) {
+    public void onGerMoviesFailure(Throwable t) {
         mPbMovies.setVisibility(View.GONE);
         mIvPlaceholder.setImageResource(R.drawable.placeholder_error_new);
         mIvPlaceholder.setVisibility(View.VISIBLE);
@@ -111,11 +107,4 @@ public class AllMoviesFragment extends BaseFragment implements AllMoviesView {
     public void onErrorDialogNegativeClick(MaterialDialog dialog) {
         errorDialog.dismissDialog();
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onItemChangedEvent(ItemChangedEvent event) {
-        mAdapter.updateItem(event.movie);
-    }
-
-
 }

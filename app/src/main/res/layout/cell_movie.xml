@@ -67,14 +67,14 @@
                     android:src="@drawable/ic_favorite_disabled" />
 
                 <fr.castorflex.android.circularprogressbar.CircularProgressBar
-                    android:id="@+id/pb_categories"
+                    android:id="@+id/pb_favourite"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="2dp"
                     android:indeterminate="true"
                     android:visibility="gone"
                     app:cpb_color="@color/colorPrimary"
+                    android:layout_centerVertical="true"
                     app:cpb_max_sweep_angle="300"
                     app:cpb_min_sweep_angle="10"
                     app:cpb_rotation_speed="1.0"

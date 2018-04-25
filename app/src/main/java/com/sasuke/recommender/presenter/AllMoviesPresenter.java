@@ -6,5 +6,5 @@ package com.sasuke.recommender.presenter;
 
 public interface AllMoviesPresenter {
 
-    void getAllMovies();
+    void getAllMovies(int userId);
 }

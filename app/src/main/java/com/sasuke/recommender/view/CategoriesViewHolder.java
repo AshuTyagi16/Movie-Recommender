@@ -23,18 +23,35 @@ public class CategoriesViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.iv_category)
     ImageView mIvCategory;
 
+    private OnItemClickListener onItemClickListener;
+    private String mCategory;
 
     public CategoriesViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onItemClick(mCategory);
+            }
+        });
     }
 
     public void setCategory(String category) {
+        mCategory = category;
         mTvCategoryName.setText(category);
         Picasso.get()
                 .load(ImageStubUtils.getImage())
                 .placeholder(R.drawable.placeholder_image_loading)
                 .error(R.drawable.placeholder_image_error)
                 .into(mIvCategory);
+    }
+
+    public void setOnItemClickListsner(OnItemClickListener onItemClickListsner) {
+        this.onItemClickListener = onItemClickListsner;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(String category);
     }
 }

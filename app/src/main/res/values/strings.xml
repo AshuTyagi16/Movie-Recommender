@@ -35,4 +35,8 @@
     <string name="name_placeholder">Your name here</string>
     <string name="age_placeholder">Your age here</string>
     <string name="confirm_password">Confirm password</string>
+
+    <!-- Search Fragment -->
+    <string name="search_movie">Search movies</string>
+    <string name="enter_movie_name">Enter movie name</string>
 </resources>
