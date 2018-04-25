@@ -67,4 +67,13 @@ dependencies {
     //Tab Bar
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
 
+    //Shimmer Animation
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+    //Shadow
+    implementation 'com.loopeer.lib:shadow:0.0.4-beta3'
+
+    //Progress Bar
+    implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.3.0'
+
 }

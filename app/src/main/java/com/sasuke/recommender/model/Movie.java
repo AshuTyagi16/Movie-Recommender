@@ -5,6 +5,7 @@ package com.sasuke.recommender.model;
  */
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,6 +17,9 @@ public class Movie {
     @SerializedName("title")
     @Expose
     private String title;
+    @SerializedName("thumbnail")
+    @Expose
+    private String thumbnail;
     @SerializedName("genres")
     @Expose
     private List<String> genres = null;
@@ -44,4 +48,11 @@ public class Movie {
         this.genres = genres;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 }

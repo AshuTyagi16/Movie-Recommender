@@ -20,8 +20,6 @@ public class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tv_category_name)
     TextView mTvCategoryName;
-    @BindView(R.id.tv_category_description)
-    TextView mTvCategoryDescription;
     @BindView(R.id.iv_category)
     ImageView mIvCategory;
 
@@ -33,11 +31,10 @@ public class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
     public void setCategory(String category) {
         mTvCategoryName.setText(category);
-        mTvCategoryDescription.setText(category);
         Picasso.get()
                 .load(ImageStubUtils.getImage())
-                .placeholder(R.drawable.night_life)
-                .error(R.drawable.nature)
+                .placeholder(R.drawable.placeholder_image_loading)
+                .error(R.drawable.placeholder_image_error)
                 .into(mIvCategory);
     }
 }

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int POSITION_HOME = 0;
     private static final int POSITION_SEARCH = 1;
     private static final int POSITION_CATEGORIES = 2;
-    private static final int POSITION_TRENDING = 3;
+    private static final int POSITION_FAVOURITE = 3;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         setupViewPagerAdapter();
         tabLayout.setViewPager(viewPager);
         viewPager.setCurrentItem(POSITION_HOME);
+        viewPager.setOffscreenPageLimit(5);
+        updateTab(POSITION_HOME);
     }
 
     private void setupViewPagerAdapter() {
@@ -61,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.home));
         tabAdapter.addFragment(CategoriesFragment.newInstance(), getResources().getString(R.string.categories));
         tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.search));
-        tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.trending));
-        tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.trending));
+        tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.favourite));
+        tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.favourite));
         viewPager.setAdapter(tabAdapter);
     }
 
@@ -123,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
             case POSITION_HOME:
                 return R.drawable.ic_home_disabled;
             case POSITION_SEARCH:
-                return R.drawable.ic_home_disabled;
+                return R.drawable.ic_search_disabled;
             case POSITION_CATEGORIES:
                 return R.drawable.ic_home_disabled;
-            case POSITION_TRENDING:
-                return R.drawable.ic_home_disabled;
+            case POSITION_FAVOURITE:
+                return R.drawable.ic_favorite_disabled;
             default:
                 return R.drawable.ic_home_disabled;
         }
@@ -138,15 +140,14 @@ public class MainActivity extends AppCompatActivity {
             case POSITION_HOME:
                 return R.drawable.ic_home;
             case POSITION_SEARCH:
-                return R.drawable.ic_home;
+                return R.drawable.ic_search;
             case POSITION_CATEGORIES:
                 return R.drawable.ic_home;
-            case POSITION_TRENDING:
-                return R.drawable.ic_home;
+            case POSITION_FAVOURITE:
+                return R.drawable.ic_favouite;
             default:
                 return R.drawable.ic_home;
         }
     }
-
 
 }

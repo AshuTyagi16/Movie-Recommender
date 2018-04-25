@@ -5,7 +5,7 @@
     <string name="home">Home</string>
     <string name="categories">Genres</string>
     <string name="search">Search</string>
-    <string name="trending">Trending</string>
+    <string name="favourite">Favourite</string>
 
     <!-- Error Dialog -->
     <string name="ok">OK</string>

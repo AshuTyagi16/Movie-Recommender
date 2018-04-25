@@ -19,6 +19,10 @@ public class ErrorDialog {
         init(context, title, content, cancellable, positiveButtonText, negativeButtonText);
     }
 
+    public ErrorDialog(Context context, String title, boolean cancellable, String positiveButtonText) {
+        init(context, title, cancellable, positiveButtonText);
+    }
+
     private void init(Context context, String title, String content, boolean cancellable, String positiveButtonText, String negativeButtonText) {
         dialog = new MaterialDialog.Builder(context)
                 .title(title)
@@ -38,6 +42,21 @@ public class ErrorDialog {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (onButtonsClickListener != null)
                             onButtonsClickListener.onErrorDialogNegativeClick(dialog);
+                    }
+                })
+                .build();
+    }
+
+    private void init(Context context, String title, boolean cancellable, String positiveButtonText) {
+        dialog = new MaterialDialog.Builder(context)
+                .title(title)
+                .cancelable(cancellable)
+                .positiveText(positiveButtonText)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (onButtonsClickListener != null)
+                            onButtonsClickListener.onErrorDialogPositiveClick(dialog);
                     }
                 })
                 .build();

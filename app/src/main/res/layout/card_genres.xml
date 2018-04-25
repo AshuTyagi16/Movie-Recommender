@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.loopeer.shadow.ShadowView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shadow_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:elevation="10dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:backgroundColor="@color/white"
+    app:cornerRadius="6dp"
+    app:shadowMargin="2dp"
+    app:shadowRadius="2dp">
 
-    <ImageView
-        android:id="@+id/iv_category"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_alignParentTop="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background" />
+        android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_category"
-        android:padding="15dp">
+        <ImageView
+            android:id="@+id/iv_category"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentTop="true"
+            android:foreground="@drawable/background_gradient"
+            android:scaleType="fitXY" />
 
-
-        <TextView
+        <com.sasuke.recommender.customfonts.MyTextView_Montserrat_Alternates_Regular
             android:id="@+id/tv_category_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:gravity="center" />
-
-        <TextView
-            android:id="@+id/tv_category_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_category_name"
-            android:layout_marginTop="5dp"
-            android:gravity="center" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="@dimen/text_size_extra_large"
+            android:textColor="@color/white" />
     </RelativeLayout>
-
-</RelativeLayout>
-
+</com.loopeer.shadow.ShadowView>
