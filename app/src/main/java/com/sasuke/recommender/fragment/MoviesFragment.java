@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.adapter.MoviesAdapter;
+import com.sasuke.recommender.manager.PreferenceManager;
 import com.sasuke.recommender.model.Movie;
 import com.sasuke.recommender.model.MoviesPresenterImpl;
 import com.sasuke.recommender.presenter.MoviesPresenter;
@@ -73,7 +74,7 @@ public class MoviesFragment extends BaseFragment implements MoviesView {
         mAdapter = new MoviesAdapter();
         mRvMovies.setAdapter(mAdapter);
         mMoviesPresenter = new MoviesPresenterImpl(this);
-        mMoviesPresenter.getMoviesForCategory(mCategory);
+        mMoviesPresenter.getMoviesForCategory(PreferenceManager.getInstance().getUser().getId(), mCategory);
     }
 
     @Override

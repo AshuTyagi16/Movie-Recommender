@@ -23,12 +23,22 @@ public class SearchResultViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_movie_name)
     TextView mTvMovieName;
 
+    private OnItemClickListener onItemClickListener;
+    private Movie mMovie;
+
     public SearchResultViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onItemClick(mMovie);
+            }
+        });
     }
 
     public void setResult(Movie movie) {
+        mMovie = movie;
         mTvMovieName.setText(movie.getTitle());
         if (movie.getThumbnail() != null) {
             Picasso.get()
@@ -37,5 +47,13 @@ public class SearchResultViewHolder extends RecyclerView.ViewHolder {
                     .error(R.drawable.placeholder_image_error)
                     .into(mIvMovie);
         }
+    }
+
+    public void setOnItemClickListsner(OnItemClickListener onItemClickListsner) {
+        this.onItemClickListener = onItemClickListsner;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Movie movie);
     }
 }

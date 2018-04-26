@@ -11,8 +11,11 @@ import android.widget.ImageView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.adapter.SearchResultAdapter;
+import com.sasuke.recommender.dialog.RateMovieDialog;
+import com.sasuke.recommender.event.MovieRatedEvent;
 import com.sasuke.recommender.event.TextChangedEvent;
 import com.sasuke.recommender.model.Movie;
+import com.sasuke.recommender.model.MovieRating;
 import com.sasuke.recommender.model.SearchResultPresenterImpl;
 import com.sasuke.recommender.presenter.SearchResultPresenter;
 import com.sasuke.recommender.view.SearchResultView;
@@ -24,13 +27,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 /**
  * Created by abc on 4/26/2018.
  */
 
-public class SearchResultFragment extends BaseFragment implements SearchResultView {
+public class SearchResultFragment extends BaseFragment implements SearchResultView, RateMovieDialog.OnRatingGivenListener, SearchResultAdapter.OnItemClickListener {
 
     @BindView(R.id.rv_search_result)
     RecyclerView mRvSearchResult;
@@ -41,6 +45,10 @@ public class SearchResultFragment extends BaseFragment implements SearchResultVi
 
     private SearchResultAdapter mAdapter;
     private SearchResultPresenter mSearchResultPresenter;
+    private RateMovieDialog mRateMovieDialog;
+    private int MIN_COUNT = 2;
+
+    private ArrayList<MovieRating> mMovieRatingList;
 
     public static SearchResultFragment newInstance() {
         return new SearchResultFragment();
@@ -54,9 +62,11 @@ public class SearchResultFragment extends BaseFragment implements SearchResultVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mMovieRatingList = new ArrayList<>();
         mSearchResultPresenter = new SearchResultPresenterImpl(this);
         mRvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SearchResultAdapter();
+        mAdapter.setOnItemClickListsner(this);
         mRvSearchResult.setAdapter(mAdapter);
     }
 
@@ -114,5 +124,27 @@ public class SearchResultFragment extends BaseFragment implements SearchResultVi
     public void onTextChangedEvent(TextChangedEvent event) {
         mPbMovies.setVisibility(View.VISIBLE);
         mSearchResultPresenter.getMoviesForQuery(event.text);
+    }
+
+    @Override
+    public void onRatingGiven(Movie movie, float rating) {
+        MovieRating movieRating = new MovieRating();
+        movieRating.setMovie(movie);
+        movieRating.setMovieRating(rating);
+        mMovieRatingList.add(movieRating);
+        mRateMovieDialog.dismissDialog();
+        EventBus.getDefault().postSticky(new MovieRatedEvent(movieRating));
+        MIN_COUNT--;
+        if (getContext() != null) {
+            if (MIN_COUNT > 0)
+                Toasty.info(getContext(), "Please rate at least " + MIN_COUNT + " more movies").show();
+        }
+    }
+
+    @Override
+    public void onItemClick(Movie movie) {
+        mRateMovieDialog = new RateMovieDialog(getContext(), movie);
+        mRateMovieDialog.setOnRatingGivenListener(this);
+        mRateMovieDialog.showDialog();
     }
 }

@@ -12,10 +12,15 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="text_light">#8a000000</color>
+    <color name="viewline">#ebeced</color>
+    <color name="blue">#1875f0</color>
 
     <!-- Background Gradient -->
     <color name="bgGradientStart">#000000</color>
     <color name="bgGradientEnd">#d8000000</color>
     <color name="transparent">#00ffffff</color>
     <color name="bgSolidDark">#55000000</color>
+
+    <!-- Rating Bar -->
+    <color name="yellow">#eaea0a</color>
 </resources>

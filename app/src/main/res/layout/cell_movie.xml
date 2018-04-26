@@ -68,8 +68,8 @@
 
                 <fr.castorflex.android.circularprogressbar.CircularProgressBar
                     android:id="@+id/pb_favourite"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
                     android:indeterminate="true"
                     android:visibility="gone"

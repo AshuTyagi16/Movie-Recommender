@@ -14,9 +14,10 @@ import java.util.ArrayList;
  * Created by abc on 4/26/2018.
  */
 
-public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultViewHolder> {
+public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultViewHolder> implements SearchResultViewHolder.OnItemClickListener {
 
     private ArrayList<Movie> mResults;
+    private OnItemClickListener onItemClickListener;
 
     @Override
     public SearchResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,6 +28,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultViewHo
     @Override
     public void onBindViewHolder(SearchResultViewHolder holder, int position) {
         holder.setResult(mResults.get(position));
+        holder.setOnItemClickListsner(this);
     }
 
     @Override
@@ -37,5 +39,18 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultViewHo
     public void setMovies(ArrayList<Movie> list) {
         mResults = list;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(Movie movie) {
+        onItemClickListener.onItemClick(movie);
+    }
+
+    public void setOnItemClickListsner(OnItemClickListener onItemClickListsner) {
+        this.onItemClickListener = onItemClickListsner;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Movie movie);
     }
 }

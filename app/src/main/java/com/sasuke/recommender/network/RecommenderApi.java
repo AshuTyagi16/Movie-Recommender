@@ -78,8 +78,8 @@ public class RecommenderApi {
         return service.getRecommendationsForQuery(movieName);
     }
 
-    public Call<ArrayList<Movie>> getMoviesForGenre(String genre) {
-        return service.getMoviesForGenre(genre);
+    public Call<ArrayList<Movie>> getMoviesForGenre(int userId, String genre) {
+        return service.getMoviesForGenre(userId, genre);
     }
 
     public Call<ArrayList<Movie>> getRecommendationsForQueryAndGenre(String movieName, String genre) {

@@ -9,59 +9,103 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
+        <com.sasuke.recommender.customfonts.EditText_Roboto_Regular
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edittext_modified_states"
             android:hint="@string/name_placeholder"
             android:inputType="textPersonName"
             android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="15dp"
             android:singleLine="true" />
 
-        <EditText
+        <com.sasuke.recommender.customfonts.EditText_Roboto_Regular
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_modified_states"
             android:hint="@string/demo_email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="15dp"
             android:singleLine="true" />
 
-        <EditText
+        <com.sasuke.recommender.customfonts.EditText_Roboto_Regular
             android:id="@+id/et_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_modified_states"
             android:hint="@string/age_placeholder"
             android:inputType="number"
             android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="15dp"
             android:singleLine="true" />
 
-        <EditText
+        <com.sasuke.recommender.customfonts.EditText_Roboto_Regular
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_modified_states"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="15dp" />
 
-        <EditText
+        <com.sasuke.recommender.customfonts.EditText_Roboto_Regular
             android:id="@+id/et_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_modified_states"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="15dp" />
 
         <Button
             android:id="@+id/btn_sign_up"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/signup" />
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/signup"
+            android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>

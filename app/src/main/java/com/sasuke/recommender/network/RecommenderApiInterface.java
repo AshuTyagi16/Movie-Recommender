@@ -35,7 +35,7 @@ public interface RecommenderApiInterface {
     Call<ArrayList<Movie>> getRecommendationsForQuery(@Query("movieName") String movieName);
 
     @GET("/fetchMoviesForGenre.php")
-    Call<ArrayList<Movie>> getMoviesForGenre(@Query("genre") String genre);
+    Call<ArrayList<Movie>> getMoviesForGenre(@Query("userId") int userId, @Query("genre") String genre);
 
     @GET("/fetchRecommendationsForQueryAndGenre.php")
     Call<ArrayList<Movie>> getRecommendationsForQueryAndGenre(@Query("movieName") String movieName, @Query("genre") String genre);

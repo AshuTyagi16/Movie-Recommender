@@ -7,14 +7,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.view.View;
+import android.widget.Button;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
+import com.sasuke.recommender.event.MovieRatedEvent;
 import com.sasuke.recommender.event.TextChangedEvent;
+import com.sasuke.recommender.model.MovieRating;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 import xyz.sahildave.widget.SearchViewLayout;
 
 /**
@@ -25,6 +33,11 @@ public class SearchFragment extends BaseFragment {
 
     @BindView(R.id.search_view_container)
     SearchViewLayout searchViewLayout;
+    @BindView(R.id.btn_recommend)
+    Button mBtnRecommend;
+
+    private MovieRatedEvent mMovieRatedEvent;
+    private ArrayList<MovieRating> mMovieRatingList;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -38,6 +51,7 @@ public class SearchFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mMovieRatingList = new ArrayList<>();
         if (getActivity() != null)
             searchViewLayout.setExpandedContentSupportFragment(getActivity(), SearchResultFragment.newInstance());
 
@@ -49,6 +63,7 @@ public class SearchFragment extends BaseFragment {
                     ContextCompat.getColor(getContext(), R.color.default_color_expanded));
 
             searchViewLayout.setTransitionDrawables(collapsed, expanded);
+            searchViewLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
             searchViewLayout.setCollapsedHint(getString(R.string.search_movie));
             searchViewLayout.setExpandedHint(getString(R.string.enter_movie_name));
         }
@@ -60,13 +75,51 @@ public class SearchFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                EventBus.getDefault().post(new TextChangedEvent(s.toString()));
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                EventBus.getDefault().post(new TextChangedEvent(s.toString()));
             }
         });
+
+        searchViewLayout.setOnToggleAnimationListener(new SearchViewLayout.OnToggleAnimationListener() {
+            @Override
+            public void onStart(boolean expanding) {
+                if (searchViewLayout.isExpanded()) {
+                    mBtnRecommend.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFinish(boolean expanded) {
+                if (!searchViewLayout.isExpanded()) {
+                    mBtnRecommend.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mBtnRecommend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mMovieRatedEvent != null && getContext() != null) {
+                    Toasty.info(getContext(), String.valueOf(mMovieRatingList.size())).show();
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -77,5 +130,17 @@ public class SearchFragment extends BaseFragment {
     @Override
     public void onErrorDialogNegativeClick(MaterialDialog dialog) {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onItemChangedEvent(MovieRatedEvent event) {
+        mBtnRecommend.setVisibility(View.VISIBLE);
+        searchViewLayout.collapse();
+        mMovieRatedEvent = event;
+        mMovieRatingList.add(event.movieRating);
+        Toasty.info(getContext(), mMovieRatingList.size() + "").show();
+        if (getContext() != null && mMovieRatingList.size() > 1) {
+            mBtnRecommend.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        }
     }
 }

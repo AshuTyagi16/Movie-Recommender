@@ -2,25 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/iv_movie_image"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:scaleType="fitCenter" />
 
-    <TextView
+    <com.sasuke.recommender.customfonts.MyTextView_Montserrat_Alternates_Regular
         android:id="@+id/tv_movie_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:padding="5dp"
+        android:textSize="@dimen/text_size_normal" />
 
-    <TextView
-        android:id="@+id/tv_movie_genre"
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/cardview_dark_background" />
+
+    <com.sasuke.recommender.customfonts.MyTextView_Montserrat_Alternates_Regular
+        android:id="@+id/tv_movie_genre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:padding="5dp"
+        android:textSize="@dimen/text_size_small" />
 
     <RatingBar
         android:id="@+id/rb_movie"
+        style="?android:attr/ratingBarStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="1"
+        android:theme="@style/RatingBar" />
+
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="15dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:paddingTop="15dp"
+        android:text="@string/ok"
+        android:textColor="@color/white" />
 </LinearLayout>

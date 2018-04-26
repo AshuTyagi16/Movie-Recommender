@@ -39,4 +39,7 @@
     <!-- Search Fragment -->
     <string name="search_movie">Search movies</string>
     <string name="enter_movie_name">Enter movie name</string>
+
+    <!-- Recommendartion -->
+    <string name="recommend">Recommend movies</string>
 </resources>

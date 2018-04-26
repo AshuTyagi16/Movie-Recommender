@@ -27,9 +27,9 @@ public class MoviesPresenterImpl implements MoviesPresenter {
     }
 
     @Override
-    public void getMoviesForCategory(String category) {
+    public void getMoviesForCategory(int userId, String category) {
         if (NetworkManager.getInstance(Recommender.getAppContext()).isConnected()) {
-            RecommenderApi.getInstance().getMoviesForGenre(category).enqueue(new Callback<ArrayList<Movie>>() {
+            RecommenderApi.getInstance().getMoviesForGenre(userId, category).enqueue(new Callback<ArrayList<Movie>>() {
                 @Override
                 public void onResponse(@NonNull Call<ArrayList<Movie>> call, @NonNull Response<ArrayList<Movie>> response) {
                     mMoviesView.onGetMoviesSuccess(response.body());
