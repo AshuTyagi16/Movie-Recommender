@@ -14,10 +14,16 @@ import android.widget.ImageView;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.adapter.TabAdapter;
+import com.sasuke.recommender.event.RecommendationDatasetReadyEvent;
 import com.sasuke.recommender.fragment.AllMoviesFragment;
 import com.sasuke.recommender.fragment.CategoriesFragment;
 import com.sasuke.recommender.fragment.FavouritesFragment;
+import com.sasuke.recommender.fragment.RecommendedMoviesFragment;
 import com.sasuke.recommender.fragment.SearchFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int POSITION_SEARCH = 1;
     private static final int POSITION_CATEGORIES = 2;
     private static final int POSITION_FAVOURITE = 3;
+    private static final int POSITION_RECOMMENDATIONS = 4;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -60,13 +67,26 @@ public class MainActivity extends AppCompatActivity {
         updateTab(POSITION_HOME);
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void setupViewPagerAdapter() {
         TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
         tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.home));
         tabAdapter.addFragment(SearchFragment.newInstance(), getResources().getString(R.string.search));
         tabAdapter.addFragment(CategoriesFragment.newInstance(), getResources().getString(R.string.categories));
         tabAdapter.addFragment(FavouritesFragment.newInstance(), getResources().getString(R.string.favourite));
-        tabAdapter.addFragment(AllMoviesFragment.newInstance(), getResources().getString(R.string.favourite));
+        tabAdapter.addFragment(RecommendedMoviesFragment.newInstance(""), getResources().getString(R.string.favourite));
         viewPager.setAdapter(tabAdapter);
     }
 
@@ -132,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
                 return R.drawable.ic_settings_disabled;
             case POSITION_FAVOURITE:
                 return R.drawable.ic_favorite_disabled;
+            case POSITION_RECOMMENDATIONS:
+                return R.drawable.ic_settings_disabled;
             default:
                 return R.drawable.ic_home_disabled;
         }
@@ -147,9 +169,15 @@ public class MainActivity extends AppCompatActivity {
                 return R.drawable.ic_settings;
             case POSITION_FAVOURITE:
                 return R.drawable.ic_favouite;
+            case POSITION_RECOMMENDATIONS:
+                return R.drawable.ic_settings;
             default:
                 return R.drawable.ic_home;
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onItemChangedEvent(RecommendationDatasetReadyEvent event) {
+        viewPager.setCurrentItem(POSITION_RECOMMENDATIONS);
+    }
 }

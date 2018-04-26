@@ -147,4 +147,5 @@ public class SearchResultFragment extends BaseFragment implements SearchResultVi
         mRateMovieDialog.setOnRatingGivenListener(this);
         mRateMovieDialog.showDialog();
     }
+
 }

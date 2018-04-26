@@ -66,7 +66,7 @@ public class AllMoviesFragment extends BaseFragment implements AllMoviesView {
         mRvMovies.setAdapter(mAdapter);
         mAllMoviesPresenter = new AllMoviesPresenterImpl(this);
         mAllMoviesPresenter.getAllMovies(PreferenceManager.getInstance().getUser().getId());
-    }
+}
 
     @Override
     public void onStart() {

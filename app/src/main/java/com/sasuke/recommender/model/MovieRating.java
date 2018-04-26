@@ -11,17 +11,17 @@ public class MovieRating {
 
     @SerializedName("movieRating")
     @Expose
-    private float movieRating;
+    private double movieRating;
 
     @SerializedName("movie")
     @Expose
     private Movie movie;
 
-    public float getMovieRating() {
+    public double getMovieRating() {
         return movieRating;
     }
 
-    public void setMovieRating(float movieRating) {
+    public void setMovieRating(double movieRating) {
         this.movieRating = movieRating;
     }
 

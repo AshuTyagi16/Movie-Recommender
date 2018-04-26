@@ -25,17 +25,17 @@ public class RecommendedMoviesPresenterImpl implements RecommendedMoviesPresente
     }
 
     @Override
-    public void getResommendedMovies(String commaSeperatedMovieIds) {
+    public void getRecommendedMovies(String commaSeperatedMovieIds) {
         if (NetworkManager.getInstance(Recommender.getAppContext()).isConnected()) {
             RecommenderApi.getInstance().getMovieById(commaSeperatedMovieIds).enqueue(new Callback<ArrayList<Movie>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Movie>> call, Response<ArrayList<Movie>> response) {
-                    mRecommendedMoviesView.onGetRecommendedMoviesSuccess();
+                    mRecommendedMoviesView.onGetRecommendedMoviesSuccess(response.body());
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<Movie>> call, Throwable t) {
-                    mRecommendedMoviesView.onGetRecommendedMoviesFailure();
+                    mRecommendedMoviesView.onGetRecommendedMoviesFailure(t);
                 }
             });
         } else

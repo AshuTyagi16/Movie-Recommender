@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.sasuke.recommender.R;
 import com.sasuke.recommender.model.Movie;
+import com.sasuke.recommender.model.MovieRating;
 import com.sasuke.recommender.view.MoviesViewHolder;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
 
-    private ArrayList<Movie> mMovieList;
+    private ArrayList<Movie> mMovieList = new ArrayList<>();
 
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,6 +36,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
 
     public void setMovies(ArrayList<Movie> list) {
         this.mMovieList = list;
+        notifyDataSetChanged();
+    }
+
+    public void setRatedMovies(MovieRating movieRating) {
+        mMovieList.add(movieRating.getMovie());
         notifyDataSetChanged();
     }
 

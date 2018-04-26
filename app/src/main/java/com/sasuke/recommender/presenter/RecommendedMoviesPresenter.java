@@ -5,5 +5,5 @@ package com.sasuke.recommender.presenter;
  */
 
 public interface RecommendedMoviesPresenter {
-    void getResommendedMovies(String commaSeperatedMovieIds);
+    void getRecommendedMovies(String commaSeperatedMovieIds);
 }

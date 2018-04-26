@@ -5,15 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sasuke.recommender.R;
+import com.sasuke.recommender.adapter.MoviesAdapter;
+import com.sasuke.recommender.event.ItemChangedEvent;
 import com.sasuke.recommender.event.MovieRatedEvent;
+import com.sasuke.recommender.event.RecommendationDatasetReadyEvent;
 import com.sasuke.recommender.event.TextChangedEvent;
 import com.sasuke.recommender.model.MovieRating;
+import com.sasuke.recommender.util.ItemDecorator;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,7 +29,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import es.dmoral.toasty.Toasty;
 import xyz.sahildave.widget.SearchViewLayout;
 
 /**
@@ -35,9 +41,12 @@ public class SearchFragment extends BaseFragment {
     SearchViewLayout searchViewLayout;
     @BindView(R.id.btn_recommend)
     Button mBtnRecommend;
+    @BindView(R.id.rv_rated_movies)
+    RecyclerView mRvRatedMovies;
 
-    private MovieRatedEvent mMovieRatedEvent;
     private ArrayList<MovieRating> mMovieRatingList;
+
+    private MoviesAdapter mAdapter;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -51,6 +60,12 @@ public class SearchFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mRvRatedMovies.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mRvRatedMovies.addItemDecoration(new ItemDecorator(
+                getResources().getDimensionPixelSize(R.dimen.item_list_spacing), 100));
+        mAdapter = new MoviesAdapter();
+        mRvRatedMovies.setAdapter(mAdapter);
+
         mMovieRatingList = new ArrayList<>();
         if (getActivity() != null)
             searchViewLayout.setExpandedContentSupportFragment(getActivity(), SearchResultFragment.newInstance());
@@ -102,8 +117,15 @@ public class SearchFragment extends BaseFragment {
         mBtnRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mMovieRatedEvent != null && getContext() != null) {
-                    Toasty.info(getContext(), String.valueOf(mMovieRatingList.size())).show();
+                if (mMovieRatingList.size() > 1) {
+                    String commaSeperatedMovieId = "";
+                    for (int i = 0; i < mMovieRatingList.size(); i++) {
+                        if (i == mMovieRatingList.size() - 1)
+                            commaSeperatedMovieId = commaSeperatedMovieId.concat("" + mMovieRatingList.get(i).getMovie().getMovieId());
+                        else
+                            commaSeperatedMovieId = commaSeperatedMovieId.concat("" + mMovieRatingList.get(i).getMovie().getMovieId()).concat(",");
+                    }
+                    EventBus.getDefault().postSticky(new RecommendationDatasetReadyEvent(commaSeperatedMovieId));
                 }
             }
         });
@@ -136,11 +158,15 @@ public class SearchFragment extends BaseFragment {
     public void onItemChangedEvent(MovieRatedEvent event) {
         mBtnRecommend.setVisibility(View.VISIBLE);
         searchViewLayout.collapse();
-        mMovieRatedEvent = event;
         mMovieRatingList.add(event.movieRating);
-        Toasty.info(getContext(), mMovieRatingList.size() + "").show();
+        mAdapter.setRatedMovies(event.movieRating);
         if (getContext() != null && mMovieRatingList.size() > 1) {
             mBtnRecommend.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onItemChangedEvent(ItemChangedEvent event) {
+        mAdapter.updateItem(event.movie);
     }
 }
